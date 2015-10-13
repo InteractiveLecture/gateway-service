@@ -1,0 +1,23 @@
+{{range $outer_service:=services}}
+{{if in .Tags "interactive-lecture"}}
+upstream {{$outer_service.Name}} {
+  {{range service $outer_service.Name}}
+  server {{.Address}}:{{.Port}};
+  {{end}}
+}
+{{end}}
+{{end}}
+
+  server {
+  listen 80; 
+  location / {
+    proxy_pass http://user-webfrontend-service;
+  }
+
+  {{range $outer_service:=services}}{{if in .Tags "interactive-lecture"}}
+      location /{{$outer_service.Name}} {
+        proxy_pass http://{{$outer_service.Name}};
+      }
+    {{end}}
+  {{end}}
+  }
