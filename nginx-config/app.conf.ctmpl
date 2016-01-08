@@ -11,7 +11,7 @@ upstream {{$outer_service.Name}} {
   server {
   listen 80; 
   {{range $outer_service:=services}}{{if in .Tags "interactive-lecture"}}
-      location /{{$outer_service.Name}} {
+      location /{{$outer_service.Name}}/ {
         proxy_pass http://{{$outer_service.Name}}/;
       }
     {{end}}
