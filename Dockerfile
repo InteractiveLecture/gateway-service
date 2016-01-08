@@ -16,6 +16,5 @@ ADD nginx.conf /etc/nginx/nginx.conf
 ADD nginx-config/app.conf.ctmpl /etc/consul-templates/app.conf.ctmpl
 EXPOSE 80 443
 
-
 CMD ["my_init"]
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
