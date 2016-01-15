@@ -13,6 +13,9 @@ upstream {{$outer_service.Name}} {
   {{range $outer_service:=services}}{{if in .Tags "interactive-lecture"}}
       location /{{$outer_service.Name}}/ {
         proxy_pass http://{{$outer_service.Name}}/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "upgrade";        
       }
     {{end}}
   {{end}}
